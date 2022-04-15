@@ -11,13 +11,37 @@ const main = async () => {
   await gameContract.deployed();
   console.log("Contract deployed to:", gameContract.address);
   let txn;
-  // We only have three characters
-  // an NFT w/ the character at index 2 in our array
+  let returnedTokenUri;
+
+  txn = await gameContract.mintCharacterNFT(0);
+  await txn.wait();
+  console.log("Minted NFT #1");
+  // Get the value of the NFT's URI
+  returnedTokenUri = await gameContract.tokenURI(1);
+  console.log("Token URI", returnedTokenUri);
+
+  txn = await gameContract.mintCharacterNFT(1);
+  await txn.wait();
+  console.log("Minted NFT #2");
+  // Get the value of the NFT's URI
+  returnedTokenUri = await gameContract.tokenURI(2);
+  console.log("Token URI", returnedTokenUri);
+
   txn = await gameContract.mintCharacterNFT(2);
   await txn.wait();
+  console.log("Minted NFT #3");
   // Get the value of the NFT's URI
-  let returnedTokenUri = await gameContract.tokenURI(1);
+  returnedTokenUri = await gameContract.tokenURI(3);
   console.log("Token URI", returnedTokenUri);
+
+  txn = await gameContract.mintCharacterNFT(1);
+  await txn.wait();
+  console.log("Minted NFT #4");
+  // Get the value of the NFT's URI
+  returnedTokenUri = await gameContract.tokenURI(4);
+  console.log("Token URI", returnedTokenUri);
+
+  console.log("Done deploying and minting.");
 };
 
 const runMain = async () => {
