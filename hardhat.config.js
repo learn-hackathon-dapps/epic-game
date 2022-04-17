@@ -14,7 +14,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 });
 
 const ALCHEMY_URL = process.env.REACT_APP_RINKEBY_RPC_URL != null ? process.env.REACT_APP_RINKEBY_RPC_URL: "";
-const WALLET_PRIVATE_KEY = process.env.REACT_APP_PRIVATE_KEY != null ? process.env.REACT_APP_PRIVATE_KEY : "";
+const WALLET_PRIVATE_KEY = process.env.REACT_APP_PRIVATE_KEY != null ? process.env.REACT_APP_PRIVATE_KEY : "0000000000000000000000000000000000000000000000000000000000000000";
 const ETHERSCAN_KEY = process.env.REACT_APP_ETHERSCAN_KEY != null ? process.env.REACT_APP_ETHERSCAN_KEY : "";
 
 // You need to export an object to set up your config
