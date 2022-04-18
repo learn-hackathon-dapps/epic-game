@@ -6,6 +6,7 @@ import { CONTRACT_ADDRESS, transformCharacterData } from './constants';
 import myEpicGame from './utils/MyEpicGame.json';
 import { ethers } from 'ethers';
 import Arena from './Components/Arena';
+import LoadingIndicator from './Components/LoadingIndicator';
 
 
 // Constants
@@ -19,7 +20,10 @@ const App = () => {
   * Right under current account, setup this new state property
   */
   const [characterNFT, setCharacterNFT] = useState(null);
-
+  /*
+  * New state property added here
+  */
+  const [isLoading, setIsLoading] = useState(false);
   // Actions
   const checkIfWalletIsConnected = async () => {
     try {
@@ -27,6 +31,10 @@ const App = () => {
 
       if (!ethereum) {
         console.log('Make sure you have MetaMask!');
+        /*
+         * We set isLoading here because we use return in the next line
+         */
+        setIsLoading(false);
         return;
       } else {
         console.log('We have the ethereum object', ethereum);
@@ -44,6 +52,10 @@ const App = () => {
     } catch (error) {
       console.log(error);
     }
+    /*
+     * We release the state property after all the function logic
+     */
+    setIsLoading(false);
   };
 
   /*
@@ -77,6 +89,12 @@ const App = () => {
 
   // Render Methods
   const renderContent = () => {
+    /*
+     * If the app is currently loading, just render out LoadingIndicator
+    */
+    if (isLoading) {
+      return <LoadingIndicator />;
+    }
     /*
     * Scenario #1
     */
@@ -116,6 +134,10 @@ const App = () => {
   }
 
   useEffect(() => {
+    /*
+    * Anytime our component mounts, make sure to immiediately set our loading state
+    */
+    setIsLoading(true);
     checkNetwork();
     checkIfWalletIsConnected();
   }, []);
@@ -147,7 +169,10 @@ const App = () => {
         console.log('No character NFT found');
       }
     };
-
+    /*
+     * Once we are done with all the fetching, set loading state to false
+     */
+    setIsLoading(false);
     /*
     * We only want to run this, if we have a connected wallet
     */
